@@ -1,0 +1,43 @@
+/**
+ * 
+ */
+package web;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * @author Administrator
+ *
+ */
+public class FirstServlet extends HttpServlet {
+/*
+ * 　①：Tomcat将http请求文本接收并解析，然后封装成HttpServletRequest类型的
+ * request对象，所有的HTTP头数据读可以通过request对象调用对应的方法查询到。
+
+　②：Tomcat同时会要响应的信息封装为HttpServletResponse类型的response对象，
+通过设置response属性就可以控制要输出到浏览器的内容，然后将response交给tomcat，
+tomcat就会将其变成响应文本的格式发送给浏览器.
+ 
+ Java Servlet API 是Servlet容器(tomcat)和servlet之间的接口，
+ 它定义了serlvet的各种方法，还定义了Servlet容器传送给Servlet的对象类，
+ 其中最重要的就是ServletRequest和ServletResponse。
+ 所以说我们在编写servlet时，需要实现Servlet接口，按照其规范进行操作。
+ */
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	PrintWriter out = response.getWriter();
+	out.println("001");
+    }
+
+    
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	doGet(request, response);
+	
+    }
+
+}
