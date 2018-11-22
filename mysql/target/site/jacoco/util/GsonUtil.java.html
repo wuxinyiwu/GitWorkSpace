@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GsonUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mysql</a> &gt; <a href="index.source.html" class="el_package">util</a> &gt; <span class="el_source">GsonUtil.java</span></div><h1>GsonUtil.java</h1><pre class="source lang-java linenums">package util;
+
+import java.util.List;
+import java.util.Map;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+public class GsonUtil {
+	 //不用创建对象,直接使用Gson.就可以调用方法
+<span class="nc" id="L12">    private static Gson gson = null;</span>
+    //判断gson对象是否存在了,不存在则创建对象
+    static {
+<span class="nc bnc" id="L15" title="All 2 branches missed.">        if (gson == null) {</span>
+           
+            //当使用GsonBuilder方式时属性为空的时候输出来的json字符串是有键值key的,显示形式是&quot;key&quot;:null，而直接new出来的就没有&quot;key&quot;:null的
+<span class="nc" id="L18">            gson= new GsonBuilder().setDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;).create();</span>
+        }
+<span class="nc" id="L20">    }</span>
+    //无参的私有构造方法
+<span class="nc" id="L22">    private GsonUtil() {</span>
+<span class="nc" id="L23">    }</span>
+
+    /**
+     * 将对象转成json格式
+     * 
+     * @param object
+     * @return String
+     */
+    public static String gsonString(Object object) {
+<span class="nc" id="L32">        String gsonString = null;</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">        if (gson != null) {</span>
+<span class="nc" id="L34">            gsonString = gson.toJson(object);</span>
+        }
+<span class="nc" id="L36">        return gsonString;</span>
+    }
+
+    /**
+     * 将json转成特定的cls的对象
+     * 
+     * @param gsonString
+     * @param cls
+     * @return
+     */
+    public static &lt;T&gt; T gsonToBean(String gsonString, Class&lt;T&gt; cls) {
+<span class="nc" id="L47">        T t = null;</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (gson != null) {</span>
+            //传入json对象和对象类型,将json转成对象
+<span class="nc" id="L50">            t = gson.fromJson(gsonString, cls);</span>
+        }
+<span class="nc" id="L52">        return t;</span>
+    }
+
+    /**
+     * json字符串转成list
+     * 
+     * @param gsonString
+     * @param cls
+     * @return
+     */
+    public static &lt;T&gt; List&lt;T&gt; gsonToList(String gsonString) {
+<span class="nc" id="L63">        List&lt;T&gt; list = null;</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (gson != null) {</span>
+            //根据泛型返回解析指定的类型,TypeToken&lt;List&lt;T&gt;&gt;{}.getType()获取返回类型
+<span class="nc" id="L66">            list = gson.fromJson(gsonString, new TypeToken&lt;List&lt;T&gt;&gt;() {</span>
+<span class="nc" id="L67">            }.getType());</span>
+        }
+<span class="nc" id="L69">        return list;</span>
+    }
+
+    /**
+     * json字符串转成list中有map的
+     * 
+     * @param gsonString
+     * @return
+     */
+    public static &lt;T&gt; List&lt;Map&lt;String, T&gt;&gt; gsonToListMaps(String gsonString) {
+<span class="nc" id="L79">        List&lt;Map&lt;String, T&gt;&gt; list = null;</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        if (gson != null) {</span>
+<span class="nc" id="L81">            list = gson.fromJson(gsonString,</span>
+<span class="nc" id="L82">                    new TypeToken&lt;List&lt;Map&lt;String, T&gt;&gt;&gt;() {</span>
+<span class="nc" id="L83">                    }.getType());</span>
+        }
+<span class="nc" id="L85">        return list;</span>
+    }
+
+    /**
+     * json字符串转成map的
+     * 
+     * @param gsonString
+     * @return
+     */
+    public static &lt;T&gt; Map&lt;String, T&gt; gsonToMaps(String gsonString) {
+<span class="nc" id="L95">        Map&lt;String, T&gt; map = null;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        if (gson != null) {</span>
+<span class="nc" id="L97">            map = gson.fromJson(gsonString, new TypeToken&lt;Map&lt;String, T&gt;&gt;() {</span>
+<span class="nc" id="L98">            }.getType());</span>
+        }
+<span class="nc" id="L100">        return map;</span>
+    }
+
+
+    
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

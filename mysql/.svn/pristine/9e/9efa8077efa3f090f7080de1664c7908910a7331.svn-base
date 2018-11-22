@@ -1,0 +1,99 @@
+package daoImpl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
+import dao.GuestsDao;
+import entity.Guests;
+import util.DaoUtils;
+
+public class GuestsDaoImpl implements GuestsDao{
+
+	@Override
+	public int insertGuests(Guests guest) {
+		// TODO Auto-generated method stub
+		 String sql="insert into myguests values(null,?,?,?,?)";
+		 Object[] objects ={guest.getFirstname(),guest.getLastname(),guest.getEmail(),guest.getReg_date()}; 
+		 int num = 0;
+		try {
+			num = DaoUtils.update(sql, objects);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		 return num;
+	}
+
+	@Override
+	public int updateGuestsName(Guests guest) {
+		// TODO Auto-generated method stub
+		String sql="update myguests set lastname=? where id=?";
+		Object[] objects={guest.getLastname(),guest.getId()}; 
+		int num = 0;
+		try {
+			num = DaoUtils.update(sql, objects);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	    return num;
+
+
+	}
+
+	@Override
+	public int deleteGuests(int id) {
+		// TODO Auto-generated method stub
+		String sql="delete from myguests where id=?";
+		Object[] objects={id}; 
+		int num = 0;
+		try {
+			num = DaoUtils.update(sql, objects);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	    return num;
+	}
+
+	@Override
+	public List<Guests> selectAllGuests() {
+		// TODO Auto-generated method stub
+		 String sql="select *from myguests"; 
+		 List<Guests> list=null; 
+		 try { 
+			 ResultSet rs=DaoUtils.getResultSet(sql, null); 
+			 list =new ArrayList<Guests>(); 
+			 while (rs.next()) { 
+				 Guests guest =new Guests(); 
+				 int id=rs.getInt("id"); 
+				 String firstname=rs.getString("firstname"); 
+				 String lastname=rs.getString("lastname"); 
+				 String email=rs.getString("email"); 
+				 Timestamp time=rs.getTimestamp("reg_date");
+				 guest.setId(id); 
+				 guest.setFirstname(firstname);
+				 guest.setLastname(lastname);
+				 guest.setEmail(email); 
+				 guest.setReg_date(time);
+				 list.add(guest); 
+				 } 
+			 } catch (SQLException e) { 
+				 // TODO Auto-generated catch block 
+				 e.printStackTrace();
+				 } 
+		 return list;
+		 }
+
+	
+
+	@Override
+	public List<Guests> selectGuests(int did) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

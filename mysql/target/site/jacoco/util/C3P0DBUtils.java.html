@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>C3P0DBUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mysql</a> &gt; <a href="index.source.html" class="el_package">util</a> &gt; <span class="el_source">C3P0DBUtils.java</span></div><h1>C3P0DBUtils.java</h1><pre class="source lang-java linenums">package util;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
+import lombok.extern.slf4j.Slf4j;
+<span class="fc" id="L19">@Slf4j</span>
+public class C3P0DBUtils {
+<span class="fc" id="L21">	private static Connection con = null;</span>
+<span class="fc" id="L22">	private static PreparedStatement ps = null;</span>
+<span class="fc" id="L23">	private static CallableStatement callableStatement = null;</span>
+<span class="fc" id="L24">	private static ResultSet rs = null;</span>
+<span class="nc" id="L25">	private C3P0DBUtils() {</span>
+<span class="nc" id="L26">	    throw new IllegalStateException(&quot;Utility class&quot;);</span>
+	  }
+<span class="fc" id="L28">	private static DataSource dataSource = new ComboPooledDataSource(&quot;mvcApp&quot;);</span>
+	
+	/**
+	 * 获取连接
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public static Connection getConnection() throws SQLException {
+<span class="fc" id="L37">		return dataSource.getConnection();</span>
+	}
+
+	public static DataSource getDataSource() {
+<span class="fc" id="L41">		return dataSource;</span>
+	}
+
+	/**
+	 * 释放连接
+	 * 
+	 * @param connection
+	 */
+	public static void releaseConnection(Connection connection) {
+		try {
+<span class="nc bnc" id="L51" title="All 2 branches missed.">			if (connection != null) {</span>
+<span class="nc" id="L52">				connection.close();</span>
+			}
+<span class="nc" id="L54">		} catch (Exception e) {</span>
+<span class="nc" id="L55">			log.error(&quot;释放连接失败&quot;,e);</span>
+<span class="nc" id="L56">		} </span>
+<span class="nc" id="L57">	}</span>
+
+	public static void close() {
+		try {
+<span class="fc bfc" id="L61" title="All 2 branches covered.">			if (rs != null) {</span>
+<span class="fc" id="L62">				rs.close();</span>
+			}
+<span class="nc" id="L64">		} catch (SQLException e) {</span>
+<span class="nc" id="L65">			e.printStackTrace();</span>
+<span class="nc" id="L66">			System.out.println(&quot;result关闭失败&quot;);</span>
+<span class="fc" id="L67">		}</span>
+		try {
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">			if (ps != null) {</span>
+<span class="fc" id="L70">				ps.close();</span>
+			}
+<span class="nc" id="L72">		} catch (SQLException e) {</span>
+<span class="nc" id="L73">			e.printStackTrace();</span>
+<span class="nc" id="L74">			System.out.println(&quot;statement关闭失败&quot;);</span>
+		} finally {
+<span class="pc" id="L76">			ps = null;</span>
+<span class="pc" id="L77">		}</span>
+
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (callableStatement != null) {</span>
+			try {
+<span class="nc" id="L81">				callableStatement.close();</span>
+<span class="nc" id="L82">			} catch (SQLException e) {</span>
+<span class="nc" id="L83">				System.out.println(e.getMessage());</span>
+			} finally {
+<span class="nc" id="L85">				callableStatement = null;</span>
+<span class="nc" id="L86">			}</span>
+		}
+
+		try {
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">			if (con != null) {</span>
+<span class="fc" id="L91">				con.close();</span>
+			}
+<span class="nc" id="L93">		} catch (SQLException e) {</span>
+<span class="nc" id="L94">			e.printStackTrace();</span>
+<span class="nc" id="L95">			System.out.println(&quot;Connect关闭失败&quot;);</span>
+		} finally {
+<span class="pc" id="L97">			con = null;</span>
+<span class="pc" id="L98">		}</span>
+<span class="fc" id="L99">	}</span>
+
+	// 实现增删改
+	public static int update(String sql, Object[] objects) throws SQLException {
+<span class="fc" id="L103">		int num = 0;</span>
+		try {
+<span class="fc" id="L105">			 con=getConnection();</span>
+<span class="fc" id="L106">			ps = con.prepareStatement(sql);</span>
+<span class="pc bpc" id="L107" title="2 of 4 branches missed.">			if (objects != null &amp;&amp; objects.length &gt; 0) {</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">				for (int i = 0; i &lt; objects.length; i++) {</span>
+<span class="fc" id="L109">					ps.setObject((i + 1), objects[i]);</span>
+				}
+			}
+<span class="fc" id="L112">			num = ps.executeUpdate();</span>
+<span class="nc" id="L113">		} catch (SQLException e) {</span>
+<span class="nc" id="L114">			e.printStackTrace();</span>
+		} finally {
+<span class="pc" id="L116">			C3P0DBUtils.close();</span>
+<span class="pc" id="L117">		}</span>
+<span class="fc" id="L118">		return num;</span>
+	}
+
+	// 查询
+	public static ResultSet getResultSet(String sql, Object[] objects) {
+<span class="fc" id="L123">		ps = null;</span>
+		try {
+<span class="fc" id="L125">			con=getConnection();</span>
+<span class="fc" id="L126">			ps = con.prepareStatement(sql);</span>
+<span class="pc bpc" id="L127" title="3 of 4 branches missed.">			if (objects != null &amp;&amp; objects.length &gt; 0) {</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">				for (int i = 0; i &lt; objects.length; i++) {</span>
+<span class="nc" id="L129">					ps.setObject((i + 1), objects[i]);</span>
+				}
+			}
+<span class="fc" id="L132">			rs = ps.executeQuery();</span>
+<span class="nc" id="L133">		} catch (SQLException e) {</span>
+<span class="nc" id="L134">			e.printStackTrace();</span>
+<span class="fc" id="L135">		}</span>
+<span class="fc" id="L136">		return rs;</span>
+	}
+	
+	/**
+	 * SQL 查询将查询结果：第一行第一列
+	 * 
+	 * @param sql
+	 *            SQL语句
+	 * @param params
+	 *            参数数组，若没有参数则为null
+	 * @return 结果集
+	 */
+	public static Object executeQuerySingle(String sql, Object[] params) {
+<span class="nc" id="L149">		Object object = null;</span>
+		try {
+<span class="nc" id="L151">			con=getConnection();</span>
+			// 调用SQL
+<span class="nc" id="L153">			ps = con.prepareStatement(sql);</span>
+			// 参数赋值
+<span class="nc bnc" id="L155" title="All 2 branches missed.">			if (params != null) {</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">				for (int i = 0; i &lt; params.length; i++) {</span>
+<span class="nc" id="L157">					ps.setObject(i + 1, params[i]);</span>
+				}
+			}
+			// 执行
+<span class="nc" id="L161">			rs = ps.executeQuery();</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">			if (rs.next()) {</span>
+<span class="nc" id="L163">				object = rs.getObject(1);</span>
+			}
+<span class="nc" id="L165">		} catch (SQLException e) {</span>
+<span class="nc" id="L166">			System.out.println(e.getMessage());</span>
+		} finally {
+<span class="nc" id="L168">			close();</span>
+<span class="nc" id="L169">		}</span>
+<span class="nc" id="L170">		return object;</span>
+	}
+
+	/**
+	 * 获取结果集，并将结果放在List中
+	 * 
+	 * @param sql
+	 *            SQL语句 params 参数，没有则为null
+	 * @return List 结果集
+	 * 
+	 */
+
+	public static List&lt;Object&gt; excuteQuery(String sql, Object[] params) {
+		// 执行SQL获得结果集
+<span class="fc" id="L184">		ResultSet rs = getResultSet(sql, params);</span>
+		// 创建ResultSetMetaData对象
+<span class="fc" id="L186">		ResultSetMetaData rsmd = null;</span>
+<span class="fc" id="L187">		List&lt;Object&gt; list =null;</span>
+		// 结果集列数
+<span class="fc" id="L189">		int columnCount = 0;</span>
+		try {
+<span class="fc" id="L191">			rsmd = rs.getMetaData();</span>
+			// 获得结果集列数
+<span class="fc" id="L193">			columnCount = rsmd.getColumnCount();</span>
+			// 创建List
+<span class="fc" id="L195">			 list = new ArrayList&lt;Object&gt;();</span>
+		
+				// 将ResultSet的结果保存到List中
+<span class="fc bfc" id="L198" title="All 2 branches covered.">				while (rs.next()) {</span>
+<span class="fc" id="L199">					Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">					for (int i = 1; i &lt;= columnCount; i++) {</span>
+<span class="fc" id="L201">						map.put(rsmd.getColumnLabel(i), rs.getObject(i));</span>
+					}
+<span class="fc" id="L203">					list.add(map);</span>
+					// 每一个map代表一条记录，把所有记录存在list中
+<span class="fc" id="L205">				}</span>
+			
+<span class="nc" id="L207">		} catch (SQLException e1) {</span>
+<span class="nc" id="L208">			System.out.println(e1.getMessage());</span>
+		} finally {
+			// 关闭所有资源
+<span class="pc" id="L211">			close();</span>
+<span class="pc" id="L212">		}</span>
+		
+<span class="fc" id="L214">		return list;</span>
+	}
+
+	/**
+	 * 存储过程带有一个输出参数的方法
+	 * 
+	 * @param sql
+	 *            存储过程语句
+	 * @param params
+	 *            参数数组
+	 * @param outParamPos
+	 *            输出参数位置
+	 * @param SqlType
+	 *            输出参数类型
+	 * @return 输出参数的值
+	 * @throws SQLException
+	 */
+	public static Object excuteQuery(String sql, Object[] params, int outParamPos, int SqlType) throws SQLException {
+<span class="nc" id="L232">		Object object = null;</span>
+<span class="nc" id="L233">		con = getConnection();</span>
+		try {
+			// 调用存储过程
+			// prepareCall:创建一个 CallableStatement 对象来调用数据库存储过程。
+<span class="nc" id="L237">			callableStatement = con.prepareCall(sql);</span>
+			// 给参数赋值
+<span class="nc bnc" id="L239" title="All 2 branches missed.">			if (params != null) {</span>
+<span class="nc bnc" id="L240" title="All 2 branches missed.">				for (int i = 0; i &lt; params.length; i++) {</span>
+<span class="nc" id="L241">					callableStatement.setObject(i + 1, params[i]);</span>
+				}
+			}
+			// 注册输出参数
+<span class="nc" id="L245">			callableStatement.registerOutParameter(outParamPos, SqlType);</span>
+			// 执行
+<span class="nc" id="L247">			callableStatement.execute();</span>
+			// 得到输出参数
+<span class="nc" id="L249">			object = callableStatement.getObject(outParamPos);</span>
+<span class="nc" id="L250">		} catch (SQLException e) {</span>
+<span class="nc" id="L251">			System.out.println(e.getMessage());</span>
+		} finally {
+			// 释放资源
+<span class="nc" id="L254">			close();</span>
+<span class="nc" id="L255">		}</span>
+<span class="nc" id="L256">		return object;</span>
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

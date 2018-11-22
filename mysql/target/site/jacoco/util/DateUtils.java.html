@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DateUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mysql</a> &gt; <a href="index.source.html" class="el_package">util</a> &gt; <span class="el_source">DateUtils.java</span></div><h1>DateUtils.java</h1><pre class="source lang-java linenums">package util;
+
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import lombok.extern.slf4j.Slf4j;
+<span class="fc" id="L14">@Slf4j</span>
+public class DateUtils {
+<span class="nc" id="L16">	private DateUtils() {</span>
+<span class="nc" id="L17">		throw new IllegalStateException(&quot;Utility class&quot;);</span>
+	}
+
+	// 多种日期格式对应的正则表达式
+<span class="fc" id="L21">	private static String[] dateTimeReg = { &quot;\\s*\\d{1,4}-\\d{1,2}-\\d{1,2}\\s+\\d{1,2}:\\d{1,2}:\\d{1,2}\\s*&quot;,</span>
+			&quot;\\s*\\d{1,4}-\\d{1,2}-\\d{1,2}\\s+\\d{1,2}:\\d{1,2}\\s*&quot;, &quot;\\s*\\d{1,4}-\\d{1,2}-\\d{1,2}\\s+\\d{1,2}\\s*&quot;,
+			&quot;\\s*\\d{1,4}-\\d{1,2}-\\d{1,2}\\s*&quot;, &quot;\\s*\\d{1,4}/\\d{1,2}/\\d{1,2}\\s+\\d{1,2}:\\d{1,2}:\\d{1,2}\\s*&quot;,
+			&quot;\\s*\\d{1,4}/\\d{1,2}/\\d{1,2}\\s+\\d{1,2}:\\d{1,2}\\s*&quot;, &quot;\\s*\\d{1,4}/\\d{1,2}/\\d{1,2}\\s+\\d{1,2}\\s*&quot;,
+			&quot;\\s*\\d{1,4}/\\d{1,2}/\\d{1,2}\\s*&quot; };
+	// 多种日期格式
+<span class="fc" id="L27">	private static DateFormat[] dateFormat = { new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;),</span>
+			new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm&quot;), new SimpleDateFormat(&quot;yyyy-MM-dd HH&quot;),
+			new SimpleDateFormat(&quot;yyyy-MM-dd&quot;), new SimpleDateFormat(&quot;yyyy/MM/dd HH:mm:ss&quot;),
+			new SimpleDateFormat(&quot;yyyy/MM/dd HH:mm&quot;), new SimpleDateFormat(&quot;yyyy/MM/dd HH&quot;),
+			new SimpleDateFormat(&quot;yyyy/MM/dd&quot;), };
+
+	/**
+	 * 获取待匹配的字符串对应的正则表达式的下标 index
+	 * 
+	 * @param dateStr
+	 * @return
+	 */
+	public static int getRegIndex(String dateStr) {
+<span class="fc" id="L40">		Pattern pattern = null;</span>
+<span class="fc" id="L41">		int i = 0;</span>
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">		for (; i &lt; dateTimeReg.length; i++) {</span>
+			// compile(正则表达式)
+<span class="fc" id="L44">			pattern = Pattern.compile(dateTimeReg[i]);</span>
+
+			// matcher(预匹配的字符串)
+<span class="fc" id="L47">			Matcher mat = pattern.matcher(dateStr);</span>
+
+			// find() 是否匹配成功
+<span class="fc" id="L50">			boolean isMatch = mat.find();</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">			if (isMatch)</span>
+<span class="fc" id="L52">				break;</span>
+		}
+
+<span class="fc" id="L55">		return i;</span>
+	}
+
+	/**
+	 * 字符串转日期类:可以转换多种格式的字符串日期
+	 * 
+	 * @param dateStr
+	 * @return
+	 */
+	public static Date strToDate(String dateStr) {
+<span class="pc bpc" id="L65" title="2 of 4 branches missed.">		if (dateStr == null || dateStr == &quot;&quot;) {</span>
+<span class="nc" id="L66">			return null;</span>
+		}
+		// 匹配成功:那么那个i就是我们所需的，目的是为了可以从 dateFormat 取到需要转换为指定的时间格式
+<span class="fc" id="L69">		int i = getRegIndex(dateStr.trim());</span>
+
+<span class="fc" id="L71">		Date resultDate = null;</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (i &lt; dateTimeReg.length) {</span>
+			try {
+<span class="fc" id="L74">				resultDate = dateFormat[i].parse(dateStr);</span>
+<span class="nc" id="L75">			} catch (ParseException e) {</span>
+<span class="nc" id="L76">				log.error(&quot;字符串转日期错误&quot;,e);</span>
+<span class="fc" id="L77">			}</span>
+		}
+<span class="fc" id="L79">		return resultDate;</span>
+	}
+
+	/**
+	 * 日期转字符串
+	 * 
+	 * @param paramDate
+	 * @param dateFormat
+	 * @return
+	 */
+	public static String dateToStr(Date paramDate, String dateFormat) {
+<span class="pc bpc" id="L90" title="3 of 6 branches missed.">		if (paramDate == null || dateFormat == null || dateFormat == &quot;&quot;) {</span>
+<span class="nc" id="L91">			return null;</span>
+		}
+<span class="fc" id="L93">		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);</span>
+<span class="fc" id="L94">		return sdf.format(paramDate);</span>
+	}
+
+	/**
+	 * 获取当前月的第一天: 采用Calendar类实现
+	 * 
+	 * @return
+	 */
+	public static Date getFirstDayInMonth() {
+<span class="fc" id="L103">		Calendar calendar = Calendar.getInstance();</span>
+<span class="fc" id="L104">		calendar.set(GregorianCalendar.DAY_OF_MONTH, 1);</span>
+<span class="fc" id="L105">		return calendar.getTime();</span>
+	}
+
+	/**
+	 * 获得系统当前的时间: 可用于命名一些文件,如上传的图片
+	 * 
+	 * @author 钟林森
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getCurrentDateStr() {
+<span class="fc" id="L116">		Date date = new Date();</span>
+<span class="fc" id="L117">		SimpleDateFormat sdf = new SimpleDateFormat(&quot;yyyyMMddhhmmss&quot;);</span>
+<span class="fc" id="L118">		return sdf.format(date);</span>
+	}
+
+	/**
+	 * 日期转换：将普通的java.util.Date转为mysql的Timestamp类型
+	 */
+	public static Timestamp utilDateToTimestamp(java.util.Date date) {
+<span class="fc" id="L125">		return new Timestamp(date.getTime());</span>
+	}
+
+	public static Timestamp getTimestampNow() {
+<span class="fc" id="L129">		return utilDateToTimestamp(new Date());</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

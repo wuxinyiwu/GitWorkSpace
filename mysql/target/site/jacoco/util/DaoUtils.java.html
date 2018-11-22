@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DaoUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mysql</a> &gt; <a href="index.source.html" class="el_package">util</a> &gt; <span class="el_source">DaoUtils.java</span></div><h1>DaoUtils.java</h1><pre class="source lang-java linenums">package util;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+/*数据存在问题
+ * 参考修改
+ * https://blog.csdn.net/weixin_38303684/article/details/78263008
+ * 
+ * 使用sonarLint提交代码质量
+ * */
+public class DaoUtils {
+<span class="nc" id="L16">	private static Connection contion = null;</span>
+<span class="nc" id="L17">	private static PreparedStatement ps = null;</span>
+<span class="nc" id="L18">	private static CallableStatement callableStatement = null;</span>
+
+<span class="nc" id="L20">	private DaoUtils() {</span>
+<span class="nc" id="L21">		throw new IllegalStateException(&quot;Utility class&quot;);</span>
+	}
+
+	static {
+		try {
+<span class="nc" id="L26">			contion = C3P0DBUtils.getConnection();</span>
+<span class="nc" id="L27">		} catch (SQLException e) {</span>
+<span class="nc" id="L28">			e.printStackTrace();</span>
+<span class="nc" id="L29">		}</span>
+<span class="nc" id="L30">	}</span>
+
+	// 实现增删改
+	public static int update(String sql, Object[] objects) throws SQLException {
+<span class="nc" id="L34">		int num = 0;</span>
+		try {
+<span class="nc" id="L36">			ps = contion.prepareStatement(sql);</span>
+<span class="nc bnc" id="L37" title="All 4 branches missed.">			if (objects != null &amp;&amp; objects.length &gt; 0) {</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">				for (int i = 0; i &lt; objects.length; i++) {</span>
+<span class="nc" id="L39">					ps.setObject((i + 1), objects[i]);</span>
+				}
+			}
+<span class="nc" id="L42">			num = ps.executeUpdate();</span>
+<span class="nc" id="L43">		} catch (SQLException e) {</span>
+<span class="nc" id="L44">			e.printStackTrace();</span>
+		} finally {
+<span class="nc" id="L46">			C3P0DBUtils.close();</span>
+<span class="nc" id="L47">		}</span>
+<span class="nc" id="L48">		return num;</span>
+	}
+
+	// 查询
+	public static ResultSet getResultSet(String sql, Object[] objects) {
+<span class="nc" id="L53">		ps = null;</span>
+<span class="nc" id="L54">		ResultSet rs = null;</span>
+		try {
+
+<span class="nc" id="L57">			ps = contion.prepareStatement(sql);</span>
+<span class="nc bnc" id="L58" title="All 4 branches missed.">			if (objects != null &amp;&amp; objects.length &gt; 0) {</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">				for (int i = 0; i &lt; objects.length; i++) {</span>
+<span class="nc" id="L60">					ps.setObject((i + 1), objects[i]);</span>
+				}
+			}
+<span class="nc" id="L63">			rs = ps.executeQuery();</span>
+<span class="nc" id="L64">		} catch (SQLException e) {</span>
+<span class="nc" id="L65">			e.printStackTrace();</span>
+<span class="nc" id="L66">		}</span>
+<span class="nc" id="L67">		return rs;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

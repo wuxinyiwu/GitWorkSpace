@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PropertiesUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mysql</a> &gt; <a href="index.source.html" class="el_package">util</a> &gt; <span class="el_source">PropertiesUtil.java</span></div><h1>PropertiesUtil.java</h1><pre class="source lang-java linenums">package util;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Properties;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class PropertiesUtil {
+<span class="nc" id="L12">	private PropertiesUtil() {</span>
+<span class="nc" id="L13">	    throw new IllegalStateException(&quot;Utility class&quot;);</span>
+}
+<span class="nc" id="L15">	private static Logger logger = LoggerFactory.getLogger(PropertiesUtil.class);</span>
+ 
+    private static Properties props;
+ 
+    //Tomcat运行时执行
+    //代码块执行顺序：静态代码块&gt;普通代码块&gt;构造代码块
+    //构造代码块每次都执行，但是静态代码块只执行一次
+    
+    public static void setProperties(String fileName){
+<span class="nc" id="L24">    	 props = new Properties();</span>
+         try {
+<span class="nc" id="L26">             props.load(new InputStreamReader(PropertiesUtil.class.getClassLoader().getResourceAsStream(fileName),&quot;UTF-8&quot;));</span>
+<span class="nc" id="L27">         } catch (IOException e) {</span>
+<span class="nc" id="L28">             logger.error(&quot;配置文件读取异常&quot;,e);</span>
+<span class="nc" id="L29">         }</span>
+<span class="nc" id="L30">    }</span>
+    public static Properties getProperties(){
+<span class="nc" id="L32">    		return props ;</span>
+   }
+    //自定义俩个get方法，方便调用工具类读取properties文件的属性
+    public static String getString(String key){
+<span class="nc" id="L36">        String value= props.getProperty(key.trim());</span>
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        if (StringUtils.isBlank(value)){</span>
+<span class="nc" id="L38">            return null;</span>
+        }
+<span class="nc" id="L40">        return value.trim();</span>
+    }
+ 
+    public static String getString(String key,String defaultValue){
+<span class="nc" id="L44">        String value= props.getProperty(key.trim());</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        if (StringUtils.isBlank(value)){</span>
+<span class="nc" id="L46">            value = defaultValue;</span>
+        }
+<span class="nc" id="L48">        return value.trim();</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

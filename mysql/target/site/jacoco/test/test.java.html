@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>test.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mysql</a> &gt; <a href="index.source.html" class="el_package">test</a> &gt; <span class="el_source">test.java</span></div><h1>test.java</h1><pre class="source lang-java linenums">package test;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+
+
+<span class="nc" id="L7">public class test {</span>
+	public static void main(String[] args) {
+<span class="nc" id="L9">		java.util.Date utilDate=new java.util.Date();</span>
+<span class="nc" id="L10">		         System.out.println(&quot;util的date:&quot;+utilDate);</span>
+		         
+<span class="nc" id="L12">		         java.sql.Date sqlDate=new java.sql.Date(utilDate.getTime());</span>
+<span class="nc" id="L13">		         System.out.println(&quot;sql的date:&quot;+sqlDate);</span>
+		         
+<span class="nc" id="L15">		         java.util.Date sTOu=new java.util.Date(sqlDate.getTime());</span>
+<span class="nc" id="L16">		         System.out.println(&quot;sqlDate转化为UtilDate&quot;+sTOu);</span>
+		        
+		        
+<span class="nc" id="L19">		         Timestamp ts=new Timestamp(utilDate.getTime());</span>
+<span class="nc" id="L20">		         System.out.println(&quot;Timestamp:&quot;+ts);</span>
+		         
+<span class="nc" id="L22">		         java.util.Date tTOu=new java.util.Date(ts.getTime());</span>
+<span class="nc" id="L23">		         System.out.println(&quot;tTOu:&quot;+tTOu);</span>
+		         
+<span class="nc" id="L25">		         java.sql.Date sqlDate1=java.sql.Date.valueOf(&quot;2014-12-10&quot;);</span>
+<span class="nc" id="L26">		         System.out.println(sqlDate1);</span>
+		         
+<span class="nc" id="L28">		         SimpleDateFormat f=new SimpleDateFormat(&quot;yyyy-MM-dd hh:mm:ss&quot;);</span>
+<span class="nc" id="L29">		         SimpleDateFormat f1=new SimpleDateFormat(&quot;yyyy&quot;);</span>
+<span class="nc" id="L30">		         System.out.println(&quot;format后的数据:&quot;+f.format(tTOu));</span>
+<span class="nc" id="L31">		         System.out.println(&quot;format后的数据:&quot;+f1.format(tTOu));</span>
+
+<span class="nc" id="L33">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

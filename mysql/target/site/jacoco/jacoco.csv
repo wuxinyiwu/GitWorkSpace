@@ -1,0 +1,19 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+mysql,exception,MyException,7,0,0,0,3,0,1,0,1,0
+mysql,daoimpl,GuestsDaoImpl,14,213,0,4,8,53,0,9,0,7
+mysql,util,GsonUtil,81,0,12,0,29,0,13,0,7,0
+mysql,util,C3P0DBUtils,215,148,22,14,58,54,18,11,4,7
+mysql,util,JDBCDBUtils,68,0,6,0,31,0,7,0,4,0
+mysql,util,DBCPUtils,64,0,6,0,27,0,8,0,5,0
+mysql,util,DateUtils,16,198,7,9,6,30,8,9,1,8
+mysql,util,GsonUtil.new TypeToken() {...},3,0,0,0,1,0,1,0,1,0
+mysql,util,PropertiesUtil,60,0,4,0,18,0,8,0,6,0
+mysql,util,GsonUtil.new TypeToken() {...},3,0,0,0,1,0,1,0,1,0
+mysql,util,DaoUtils,101,0,12,0,32,0,10,0,4,0
+mysql,util,GsonUtil.new TypeToken() {...},3,0,0,0,1,0,1,0,1,0
+mysql,test,test,122,0,0,0,18,0,2,0,2,0
+mysql,mysql,JDBCDemo1,93,0,4,0,21,0,4,0,2,0
+mysql,mysql,C3P0Demo2,127,0,2,0,32,0,6,0,5,0
+mysql,mysql,C3P0Demo1,96,0,2,0,25,0,4,0,3,0
+mysql,mysql,DBCPDemo1,98,0,2,0,26,0,4,0,3,0
+mysql,entity,Guests,203,70,46,0,1,7,27,12,4,12
