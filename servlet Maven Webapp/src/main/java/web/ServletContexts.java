@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Administrator
  *
  */
-public class test extends HttpServlet {
+public class ServletContexts extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	ServletContext context = this.getServletContext();
