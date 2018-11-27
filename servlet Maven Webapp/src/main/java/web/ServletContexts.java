@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  */
 public class ServletContexts extends HttpServlet {
-
+   
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	ServletContext context = this.getServletContext();
 	String contextPath = context.getContextPath();
