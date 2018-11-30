@@ -19,7 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 public class CodeServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	String query = URLDecoder.decode(request.getQueryString());
+	String query=null;
+	String sss = request.getQueryString();
+	if(sss!=null){
+	    query = URLDecoder.decode(request.getQueryString());
+	}
 	System.out.println(query);
 	PrintWriter out = response.getWriter();
 	out.println("中文字符过滤器过滤后");

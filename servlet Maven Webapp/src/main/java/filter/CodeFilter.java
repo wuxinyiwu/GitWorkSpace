@@ -5,21 +5,31 @@ package filter;
 
 import java.io.IOException;
 
+import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.net.httpserver.Filter.Chain;
 
 /**
  * @author Administrator
  *
  */
+@WebFilter(description="统一编码过滤器", filterName="CodeFilter",urlPatterns="/*",
+servletNames={},
+dispatcherTypes={DispatcherType.FORWARD,DispatcherType.REQUEST}
+,initParams={
+    @WebInitParam(name="name",value="zhangsan",description="过滤器初始化参数1"),
+    @WebInitParam(name="sex",value="男",description="过滤器初始化参数2")
+    
+})
 public class CodeFilter implements Filter{
 
     @Override
