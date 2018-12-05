@@ -13,7 +13,14 @@
 		<param-name>上下文参数名2</param-name>
 		<param-value>上下文参数值2</param-value>
 	</context-param>
-
+<!-- 注册针对ServletContext对象进行监听的监听器 
+   <listener>
+       <description>ServletContextListener监听器</description>
+      
+       <listener-class>listen.web.MyServletRequestListens</listener-class>
+   </listener>
+  -->
+   
 <!-- 过滤器配置 -->
 	<filter>
 	
@@ -107,50 +114,4 @@
 		<url-pattern>/codeServlet</url-pattern>
 	</servlet-mapping>
 
-
-
-<<<<<<< HEAD
-	<!-- 过滤器配置
-	<filter>
-		<description>自定义servlet注解处理器</description>
-		<filter-name>AnnotationHandleFilter</filter-name>
-		<filter-class>servlet3.AnnotaionTest.AnnotationHandleFilte</filter-class>
-		<init-param>
-			<description>配置要扫描包及其子包, 如果有多个包,以逗号分隔</description>
-			<param-name>basepack</param-name>
-			<param-value>servlet3.AnnotaionTest</param-value>
-		</init-param>
-	</filter>
-
-	<filter-mapping>
-		<filter-name>AnnotationHandleFilter</filter-name>
-		<url-pattern>*.do</url-pattern>
-	</filter-mapping>
- -->
-	<!-- 编码过滤器 
-	<filter>
-		<description>统一编码过滤器</description>
-		<filter-name>CodeFilter</filter-name>
-		<filter-class>filter.CodeFilter</filter-class>
-		<init-param>
-			<description>过滤器初始化参数1</description>
-			<param-name>name</param-name>
-			<param-value>zhangsan</param-value>
-		</init-param>
-		<init-param>
-			<description>过滤器初始化参数2</description>
-			<param-name>sex</param-name>
-			<param-value>男</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>CodeFilter</filter-name>
-		<url-pattern>*</url-pattern>
-		
-	</filter-mapping>
--->
-=======
-	
-
->>>>>>> branch 'master' of https://github.com/wuxinyiwu/GitWorkSpace.git
 </web-app>
