@@ -36,7 +36,6 @@ public class Request extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	request.setCharacterEncoding("UTF-8");
 	response.setContentType("text/html;charset=UTF-8");
-
 	// 参数获取
 
 	Enumeration<String> paramets = request.getParameterNames();
@@ -98,7 +97,7 @@ public class Request extends HttpServlet {
 	    String name = (String) headers.nextElement();
 	    p("获取请求头"+name+"：         "+request.getHeader(name));
 	}
-	
+
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

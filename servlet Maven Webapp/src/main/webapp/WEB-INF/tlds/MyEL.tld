@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+	<description>这是我自定义的EL</description>
+	<tlib-version>1.0</tlib-version>
+	<short-name>MyEL</short-name><!-- 标签库名称，一般定义成和文件名一样 -->
+	<!-- <uri>http://tomcat.apache.org/jsp2-example-taglib</uri> -->
+	<!-- 注册函数 -->
+	<function>
+		<name>MyLowerToUpper</name>
+		<function-class>el.MyEL</function-class><!-- 方法的类 -->
+		<function-signature>java.lang.String lowerToUpper(java.lang.String )</function-signature>
+	</function>
+
+</taglib>
+

@@ -13,18 +13,20 @@
 		<param-name>上下文参数名2</param-name>
 		<param-value>上下文参数值2</param-value>
 	</context-param>
-<!-- 注册针对ServletContext对象进行监听的监听器 
-   <listener>
-       <description>ServletContextListener监听器</description>
-      
-       <listener-class>listen.web.MyServletRequestListens</listener-class>
-   </listener>
-  -->
-   
-<!-- 过滤器配置 -->
-	<filter>
 	
-	<filter-name>AnnotationHandleFilter</filter-name>
+	
+
+
+
+
+
+	<!-- 注册针对ServletContext对象进行监听的监听器 <listener> <description>ServletContextListener监听器</description> 
+		<listener-class>listen.web.MyServletRequestListens</listener-class> </listener> -->
+
+	<!-- 过滤器配置 -->
+	<filter>
+
+		<filter-name>AnnotationHandleFilter</filter-name>
 		<description>自定义servlet注解处理器</description>
 		<filter-class>servlet3.AnnotaionTest.AnnotationHandleFilte</filter-class>
 		<init-param>
@@ -33,22 +35,22 @@
 			<description>配置要扫描包及其子包, 如果有多个包,以逗号分隔</description>
 		</init-param>
 	</filter>
-<!-- 编码过滤器 -->
+	<!-- 编码过滤器 -->
 	<filter>
 		<filter-name>CodeFilter</filter-name>
 		<description>统一编码过滤器</description>
 		<filter-class>filter.CodeFilter</filter-class>
 		<init-param>
-		<param-name>name</param-name>
+			<param-name>name</param-name>
 			<param-value>zhangsan</param-value>
 			<description>过滤器初始化参数1</description>
-			
+
 		</init-param>
 		<init-param>
-		<param-name>sex</param-name>
+			<param-name>sex</param-name>
 			<param-value>男</param-value>
 			<description>过滤器初始化参数2</description>
-			
+
 		</init-param>
 	</filter>
 	<filter-mapping>
@@ -56,11 +58,11 @@
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
 
-	
+
 	<filter-mapping>
 		<filter-name>CodeFilter</filter-name>
 		<url-pattern>*</url-pattern>
-		
+
 	</filter-mapping>
 	<servlet>
 		<servlet-name>ServletConfigs</servlet-name>
@@ -114,4 +116,41 @@
 		<url-pattern>/codeServlet</url-pattern>
 	</servlet-mapping>
 
+	<!-- jsp路径配置 -->
+	<servlet>
+		<servlet-name>SimpleJspServlet</servlet-name>
+		<jsp-file>/index.jsp</jsp-file>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>SimpleJspServlet</servlet-name>
+		<url-pattern>/index5.jsp</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- 错误页面问题同时jsp中的errorPage命令的优先级比较高 -->
+	<error-page>
+		<exception-type>Exception</exception-type>
+		<location>/erro.jsp</location>
+	</error-page>
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/erro.jsp</location>
+	</error-page>
+
+	<error-page>
+		<error-code>500</error-code>
+		<location>/erro.jsp</location>
+	</error-page>
+	
+ 		<jsp-config>
+            <taglib>
+                   <taglib-uri>http://testcomp.com/testcomp/core</taglib-uri>
+                   <taglib-location>/WEB-INF/tlds/MyEL.tld</taglib-location>  
+            </taglib>
+       </jsp-config>
+
 </web-app>
+

@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @WebListener
+
 public class SerializListener implements HttpSessionActivationListener,  Serializable{
     private String name;
     @Override

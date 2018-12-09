@@ -1,10 +1,14 @@
-<%@ page pageEncoding="utf-8"   contentType="text/html;charset=utf-8"%>
+<%@ page pageEncoding="utf-8"  errorPage="erro.jsp" info="这是info信息的测试"  contentType="text/html;charset=utf-8"%>
+
 <html>
   <head>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
   <title>用户表单</title>
   </head>
  <body>
+ <% 
+    int x = 1/0;  
+%>  
  <center>
      <form action="/servlet/request?parame1=parame值1&parame2=parame值2" method="post">
          <table>
