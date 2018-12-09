@@ -24,6 +24,10 @@ import lombok.NoArgsConstructor;
 
 public class SerializListener implements HttpSessionActivationListener,  Serializable{
     private String name;
+    
+    public SerializListener(String name) {
+	this.name=name;
+    }
     @Override
     public void sessionWillPassivate(HttpSessionEvent se) {
 	System.out.println(name+"和session一起被序列化(钝化)到硬盘了，session的id是："+se.getSession().getId());

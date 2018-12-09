@@ -24,6 +24,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BindingListenerBean implements HttpSessionBindingListener{
     private String name;
+    public BindingListenerBean(String name){
+	this.name=name;
+    }
     @Override
     public void valueBound(HttpSessionBindingEvent event) {
 	System.out.println("对象被绑定到session域");
