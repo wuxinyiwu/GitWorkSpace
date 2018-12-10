@@ -19,7 +19,6 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @WebListener
 
 public class SerializListener implements HttpSessionActivationListener,  Serializable{

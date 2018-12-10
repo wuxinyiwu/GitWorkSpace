@@ -21,7 +21,6 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class BindingListenerBean implements HttpSessionBindingListener{
     private String name;
     public BindingListenerBean(String name){
