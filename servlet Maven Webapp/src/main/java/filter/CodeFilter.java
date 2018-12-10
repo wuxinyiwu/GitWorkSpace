@@ -35,7 +35,7 @@ public class CodeFilter implements Filter{
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 	String filterName = filterConfig.getFilterName();
-	System.out.println("过滤器的名字为："+filterName);
+	//System.out.println("过滤器的名字为："+filterName);
     }
    
 
@@ -51,10 +51,10 @@ public class CodeFilter implements Filter{
 	  和response.setCharacterEncoding("UTF-8");两句代码。
 	 */
 	
-	System.out.println("编码过滤器放行前");
+	//System.out.println("编码过滤器放行前");
 	//放行请求资源
 	chain.doFilter(request, response);
-	System.out.println("编码过滤器放行后");
+	//System.out.println("编码过滤器放行后");
 	
     }
 

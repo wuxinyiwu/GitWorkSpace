@@ -9,8 +9,8 @@
 		<param-name>上下文参数名2</param-name>
 		<param-value>上下文参数值2</param-value>
 	</context-param>
-	
-	
+
+
 
 
 
@@ -24,7 +24,8 @@
 
 		<filter-name>AnnotationHandleFilter</filter-name>
 		<description>自定义servlet注解处理器</description>
-		<filter-class>servlet3.AnnotaionTest.AnnotationHandleFilte</filter-class>
+		<filter-class>servlet3.AnnotaionTest.AnnotationHandleFilte
+		</filter-class>
 		<init-param>
 			<param-name>basepack</param-name>
 			<param-value>servlet3.AnnotaionTest</param-value>
@@ -140,13 +141,18 @@
 		<error-code>500</error-code>
 		<location>/erro.jsp</location>
 	</error-page>
-	
- 		<jsp-config>
-            <taglib>
-                   <taglib-uri>http://testcomp.com/testcomp/core</taglib-uri>
-                   <taglib-location>/WEB-INF/tlds/MyEL.tld</taglib-location>  
-            </taglib>
-       </jsp-config>
+
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<el-ignored>false</el-ignored>
+		
+		</jsp-property-group>
+		<taglib>
+			<taglib-uri>http://testcomp.com/testcomp/core</taglib-uri>
+			<taglib-location>/WEB-INF/tlds/MyEL.tld</taglib-location>
+		</taglib>
+	</jsp-config>
 
 </web-app>
 

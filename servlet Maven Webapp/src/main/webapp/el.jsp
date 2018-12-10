@@ -1,9 +1,10 @@
-<%@ page language="java" import="java.util.*" isELIgnored="false"  pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*"  pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <%@ taglib uri="http://testcomp.com/testcomp/core" prefix="MyEL" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
@@ -26,6 +27,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         pageContext.setAttribute("name", name);
     %>
   <body>
-    ${MyEL:MyLowerToUpper(name)} <br>
+  自定义EL测试：<br>
+    ${MyEL:MyLowerToUpper(name)} <br><br>
+<c:if test="${5>3}" var="string">
+   c:if测试
+</c:if>
+<br><br>
+c:out的测试：<br>
+value为空，输出标签对中的内容：<br>
+  <c:out value="${null}">使用的表达式结果为null，则输出该默认值</c:out><br/><br>
+  value不为空，输出value中的内容：<br>
+   <c:out value="${name}">使用的表达式结果为null，则输出该默认值</c:out><br/>
   </body>
 </html>

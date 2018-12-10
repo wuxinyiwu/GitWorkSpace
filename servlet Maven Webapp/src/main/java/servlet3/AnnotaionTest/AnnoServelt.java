@@ -15,7 +15,7 @@ import servlet3.Annotaion.WebServlet;
 @WebServlet("/annoServlet")
 public class AnnoServelt {
     public void init(){
-	System.out.println("Servlet的初始化方法");
+	//System.out.println("Servlet的初始化方法");
     }
     
     /**
@@ -23,7 +23,7 @@ public class AnnoServelt {
      * @param response
      */
     private void doPost(HttpServletRequest request, HttpServletResponse response) {
-	System.out.println("do***处理请求");
+	//System.out.println("do***处理请求");
     }
     
     /**
@@ -36,7 +36,7 @@ public class AnnoServelt {
     }
 
     public void test(HttpServletRequest request,HttpServletResponse response){
-	System.out.println("！请求访问@webServlet的方法成功");
+	//System.out.println("！请求访问@webServlet的方法成功");
     }
    
 }

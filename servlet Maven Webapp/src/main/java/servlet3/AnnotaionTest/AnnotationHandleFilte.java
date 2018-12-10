@@ -38,7 +38,7 @@ public class AnnotationHandleFilte implements Filter {
      */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-	System.out.println("========AnnotationHandleFilter处理器初始化开始");
+	//System.out.println("========AnnotationHandleFilter处理器初始化开始");
 	servletContex = filterConfig.getServletContext();
 	
 	Map<String, Class<?>> classMap = new HashMap<String, Class<?>>();
@@ -97,10 +97,10 @@ public class AnnotationHandleFilte implements Filter {
 
 		servletContex.setAttribute("servletClassMap", classMap);
 
-		System.out.println("annotationAttrValue：" + annotationAttrValue);
+		//System.out.println("annotationAttrValue：" + annotationAttrValue);
 		String targetClassName = annotationAttrValue.substring(annotationAttrValue.lastIndexOf("/") + 1);
-		System.out.println("targetClassName：" + targetClassName);
-		System.out.println(clazz);
+		//System.out.println("targetClassName：" + targetClassName);
+		//System.out.println(clazz);
 	    }
 	}
     }

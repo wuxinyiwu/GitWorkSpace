@@ -17,19 +17,19 @@ public class MyRequestAndSessionAttributeListener implements ServletRequestAttri
    
     @Override
     public void attributeAdded(ServletRequestAttributeEvent srae) {
-	System.out.println("Request域添加属性");
+	//System.out.println("Request域添加属性");
     }
 
    
     @Override
     public void attributeRemoved(ServletRequestAttributeEvent srae) {
-	System.out.println("Request域删除属性");
+	//System.out.println("Request域删除属性");
     }
 
    
     @Override
     public void attributeReplaced(ServletRequestAttributeEvent srae) {
-	System.out.println("Request域替换属性值");
+	//System.out.println("Request域替换属性值");
     }
 
 }

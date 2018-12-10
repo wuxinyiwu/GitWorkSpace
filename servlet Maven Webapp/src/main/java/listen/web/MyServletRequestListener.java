@@ -17,13 +17,13 @@ public class MyServletRequestListener implements ServletRequestListener{
     
     @Override
     public void requestDestroyed(ServletRequestEvent request) {
-	System.out.println("请求Resquest销毁");
+	//System.out.println("请求Resquest销毁");
     }
 
     
     @Override
     public void requestInitialized(ServletRequestEvent response) {
-	System.out.println("请求Resquest创建");
+	//System.out.println("请求Resquest创建");
     }
 
 }
