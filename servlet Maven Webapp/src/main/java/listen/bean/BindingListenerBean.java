@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BindingListenerBean implements HttpSessionBindingListener{
     private String name;
+    //有参构造方法
     public BindingListenerBean(String name){
 	this.name=name;
     }
